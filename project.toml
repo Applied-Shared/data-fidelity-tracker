@@ -1,0 +1,18 @@
+name = "data-fidelity-tracker"
+enable_filestore = false
+enable_gcs_fuse = false
+enable_postgres = false
+enable_mysql = false
+enable_secrets = false
+enable_api_gateway = false
+enable_slack = false
+
+[cloudrun]
+  memory = "1Gi"
+  cpu = "1"
+  timeout = "300s"
+  min_instances = 0
+
+[metadata]
+  owner = "samvitti_sharma@applied.co"
+  description = "Project Data Fidelity: Input Data Validation Tracker — per-dataset camera DQ reports"
