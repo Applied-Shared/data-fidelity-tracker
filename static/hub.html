@@ -65,6 +65,20 @@
       <a class="open-btn" href="/gen2-mache-baseline/">Open report</a>
     </div>
   </div>
+
+  <h2 style="margin-top:48px">Regenerating a report</h2>
+  <p class="subtitle" style="margin-bottom:12px">
+    Run inside the dev docker in core-stack, then copy the output into this repo and redeploy.
+  </p>
+  <pre style="background:#0f172a;color:#e2e8f0;padding:18px 20px;border-radius:8px;font-size:13px;line-height:1.7;overflow-x:auto;max-width:900px">bazel run //tools/offboard/common/image_quality_analysis:neural_sim_report -- \
+  --lance_index_path s3://onroad-perception-datasets/scenario_dataset_export/gen2_mache_scenario_dataset/2026-04-29_17-51-19/dataset.lance \
+  --title "Baseline gen2_mache_scenario_dataset data quality report" \
+  --dt_min 2025-07-01 --dt_max &lt;today&gt; \
+  --summary_by segment</pre>
+  <p class="subtitle" style="margin-top:10px">
+    Then copy the output <code>report.html</code> → <code>static/sections/gen2_mache_baseline/index.html</code>
+    and the <code>images/</code> dir alongside it, commit, and run <code>apps-platform app deploy</code>.
+  </p>
 </div>
 </body>
 </html>
