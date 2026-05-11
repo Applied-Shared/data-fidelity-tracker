@@ -23,6 +23,8 @@ _SECTIONS_ROOT = os.path.join(_STATIC, "sections")
 SECTIONS: list[tuple[str, str, str]] = [
     ("gen2-mache-baseline", "gen2_mache_baseline", "Baseline"),
     ("dq-0509-76segs", "dq_0509_76segs", "05/09 Evening Session"),
+    ("dq-154910", "dq_154910", "05/10 Morning Session"),
+    ("dq-185533", "dq_185533", "05/10 Afternoon Session"),
 ]
 
 _SLUG_TO_DIR: dict[str, str] = {slug: d for slug, d, _ in SECTIONS}
