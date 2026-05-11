@@ -22,6 +22,7 @@ _SECTIONS_ROOT = os.path.join(_STATIC, "sections")
 # Ordered list of (slug, disk_subdir, display_label) for the tab bar.
 SECTIONS: list[tuple[str, str, str]] = [
     ("gen2-mache-baseline", "gen2_mache_baseline", "Baseline"),
+    ("dq-0509-76segs", "dq_0509_76segs", "05/09 Evening Session"),
 ]
 
 _SLUG_TO_DIR: dict[str, str] = {slug: d for slug, d, _ in SECTIONS}
