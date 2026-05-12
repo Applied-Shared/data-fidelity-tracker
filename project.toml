@@ -2,6 +2,7 @@ name = "data-fidelity-tracker"
 allowed_usergroups = [
   "okta-team-applied-fte@applied.co",
   "ambrosiussen@ext.applied.co",
+  "venkata.manivannan@applied.co",
 ]
 enable_filestore = false
 enable_gcs_fuse = false
