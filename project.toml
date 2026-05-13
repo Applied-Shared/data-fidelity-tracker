@@ -2,7 +2,6 @@ name = "data-fidelity-tracker"
 allowed_usergroups = [
   "okta-team-applied-fte@applied.co",
   "ambrosiussen@ext.applied.co",
-  "venkata.manivannan@applied.co",
 ]
 enable_filestore = false
 enable_gcs_fuse = false
@@ -20,4 +19,5 @@ enable_slack = false
 
 [metadata]
   owner = "samvitti_sharma@applied.co"
+  maintainers = ["venkata.manivannan@applied.co"]
   description = "Project Data Fidelity: Input Data Validation Tracker — per-dataset camera DQ reports for neural sim"
