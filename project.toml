@@ -18,6 +18,6 @@ enable_slack = false
   min_instances = 0
 
 [metadata]
-  owner = "samvitti_sharma@applied.co"
+  owner = "samvitti.sharma@applied.co"
   maintainers = ["venkata.manivannan@applied.co", "twang@applied.co"]
   description = "Project Data Fidelity: Input Data Validation Tracker — per-dataset camera DQ reports for neural sim"
