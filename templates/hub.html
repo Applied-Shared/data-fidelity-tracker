@@ -126,6 +126,7 @@
   --dt_min &lt;start&gt; --dt_max &lt;end&gt; \
   --summary_by segment</pre>
 </div>
+{% if tab != 'mce106' %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
 const LABELS = ['Baseline', '05/09 Eve', '05/10 AM', '05/10 PM'];
@@ -210,5 +211,6 @@ makeChart('chart-over', '#f43f5e',
   [66.5558, 38.3545, 47.6530, 62.9203]
 );
 </script>
+{% endif %}
 </body>
 </html>
