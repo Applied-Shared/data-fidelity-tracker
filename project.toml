@@ -8,7 +8,7 @@ enable_filestore = false
 enable_gcs_fuse = false
 enable_postgres = false
 enable_mysql = false
-enable_secrets = false
+enable_secrets = true
 enable_api_gateway = false
 enable_slack = false
 
@@ -20,4 +20,5 @@ enable_slack = false
 
 [metadata]
   owner = "samvitti_sharma@applied.co"
+  maintainers = ["venkata.manivannan@applied.co", "samvitti_sharma@applied.co"]
   description = "Project Data Fidelity: Input Data Validation Tracker — per-dataset camera DQ reports for neural sim"
