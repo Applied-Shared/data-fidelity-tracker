@@ -53,13 +53,50 @@ def _parse_s3_uri(uri: str) -> tuple[str, str]:
     return bucket, prefix.rstrip("/")
 
 
+_oci_creds: dict | None = None
+
+
+def _load_oci_creds() -> dict:
+    global _oci_creds
+    if _oci_creds is not None:
+        return _oci_creds
+
+    project_id = os.environ.get("PROJECT_ID", "")
+
+    def _secret(name: str, env_fallback: str) -> str | None:
+        val = os.environ.get(env_fallback)
+        if val:
+            return val
+        if not project_id:
+            return None
+        try:
+            from google.cloud import secretmanager
+            client = secretmanager.SecretManagerServiceClient()
+            path = f"projects/{project_id}/secrets/data-fidelity-tracker-{name}/versions/latest"
+            return client.access_secret_version(request={"name": path}).payload.data.decode()
+        except Exception as exc:
+            app.logger.warning("Could not fetch secret %s: %s", name, exc)
+            return None
+
+    _oci_creds = {
+        "aws_access_key_id":     _secret("aws-access-key-id",     "AWS_ACCESS_KEY_ID"),
+        "aws_secret_access_key": _secret("aws-secret-access-key", "AWS_SECRET_ACCESS_KEY"),
+        "endpoint_url":          _secret("s3-endpoint-url",       "S3_ENDPOINT_URL"),
+        "region_name":           _secret("aws-default-region",    "AWS_DEFAULT_REGION") or "us-phoenix-1",
+    }
+    return _oci_creds
+
+
 def _s3_client():
     import boto3
     from botocore.config import Config
+    creds = _load_oci_creds()
     return boto3.client(
         "s3",
-        endpoint_url=os.environ.get("S3_ENDPOINT_URL"),
-        region_name=os.environ.get("AWS_DEFAULT_REGION", "us-phoenix-1"),
+        aws_access_key_id=creds["aws_access_key_id"],
+        aws_secret_access_key=creds["aws_secret_access_key"],
+        endpoint_url=creds["endpoint_url"],
+        region_name=creds["region_name"],
         config=Config(s3={"addressing_style": "path"}),
     )
 
