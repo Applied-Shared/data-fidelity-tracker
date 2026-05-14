@@ -1,0 +1,38 @@
+[
+  {
+    "slug": "gen2-mache-baseline",
+    "label": "Baseline — gen2_mache_scenario_dataset",
+    "date": "2026-04-29",
+    "subtitle": "317 segments · 3 runs",
+    "note": "s3://onroad-perception-datasets/scenario_dataset_export/gen2_mache_scenario_dataset/2026-04-29_17-51-19/dataset.lance",
+    "s3_uri": null,
+    "local_dir": "gen2_mache_baseline"
+  },
+  {
+    "slug": "dq-0509-76segs",
+    "label": "05/09 Evening Session",
+    "date": "2026-05-09",
+    "subtitle": "76 segments w/ MLDS coverage",
+    "note": null,
+    "s3_uri": null,
+    "local_dir": "dq_0509_76segs"
+  },
+  {
+    "slug": "dq-154910",
+    "label": "05/10 Morning Session",
+    "date": "2026-05-10",
+    "subtitle": "30 segments w/ MLDS coverage",
+    "note": null,
+    "s3_uri": null,
+    "local_dir": "dq_154910"
+  },
+  {
+    "slug": "dq-185533",
+    "label": "05/10 Afternoon Session",
+    "date": "2026-05-10",
+    "subtitle": "31 segments w/ MLDS coverage",
+    "note": null,
+    "s3_uri": null,
+    "local_dir": "dq_185533"
+  }
+]

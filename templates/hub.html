@@ -39,6 +39,8 @@
               padding: 8px 20px; border-radius: 6px; font-size: 14px; font-weight: 500;
               white-space: nowrap; transition: background .15s; }
   .open-btn:hover { background: var(--accent-hover); }
+
+  .empty-state { color: var(--text3); font-size: 14px; padding: 32px 0; }
 </style>
 </head>
 <body>
@@ -53,38 +55,32 @@
   <h2>Input Data Validation Reports</h2>
   <p class="subtitle">
     Per-dataset camera data quality reports covering tint, sharpness, exposure, and sensor extrinsics.
+    New reports are picked up automatically from S3 every 3 hours.
   </p>
 
   <div class="report-grid">
+    {% for report in reports %}
     <div class="report-card">
       <div class="info">
-        <h3>Baseline — gen2_mache_scenario_dataset</h3>
-        <p>2026-04-29 &nbsp;·&nbsp; 317 segments &nbsp;·&nbsp; 3 runs</p>
-        <code>s3://onroad-perception-datasets/scenario_dataset_export/gen2_mache_scenario_dataset/2026-04-29_17-51-19/dataset.lance</code>
+        <h3>{{ report.label }}</h3>
+        {% if report.date or report.subtitle %}
+        <p>
+          {{ report.date or '' }}
+          {% if report.date and report.subtitle %}&nbsp;·&nbsp;{% endif %}
+          {{ report.subtitle or '' }}
+        </p>
+        {% endif %}
+        {% if report.note %}
+        <code>{{ report.note }}</code>
+        {% elif report.source == 's3' %}
+        <code>{{ report.s3_uri }}</code>
+        {% endif %}
       </div>
-      <a class="open-btn" href="/gen2-mache-baseline/">Open report</a>
+      <a class="open-btn" href="/{{ report.slug }}/">Open report</a>
     </div>
-    <div class="report-card">
-      <div class="info">
-        <h3>05/09 Evening Session</h3>
-        <p>2026-05-09 &nbsp;·&nbsp; 76 segments w/ MLDS coverage</p>
-      </div>
-      <a class="open-btn" href="/dq-0509-76segs/">Open report</a>
-    </div>
-    <div class="report-card">
-      <div class="info">
-        <h3>05/10 Morning Session</h3>
-        <p>2026-05-10 &nbsp;·&nbsp; 30 segments w/ MLDS coverage</p>
-      </div>
-      <a class="open-btn" href="/dq-154910/">Open report</a>
-    </div>
-    <div class="report-card">
-      <div class="info">
-        <h3>05/10 Afternoon Session</h3>
-        <p>2026-05-10 &nbsp;·&nbsp; 31 segments w/ MLDS coverage</p>
-      </div>
-      <a class="open-btn" href="/dq-185533/">Open report</a>
-    </div>
+    {% else %}
+    <p class="empty-state">No reports found. Check that AWS credentials are set and the S3 prefix is reachable.</p>
+    {% endfor %}
   </div>
 
   <h2 style="margin-top:48px">Metric Trends</h2>
@@ -110,16 +106,16 @@
 
   <h2 style="margin-top:48px">Adding a report</h2>
   <p class="subtitle" style="margin-bottom:12px">
-    Generate the report in core-stack (output uploads to S3), then register it here and redeploy.
+    Generate the report in core-stack. Once uploaded to
+    <code>{{ s3_reports_uri or 's3://onroad-perception-datasets/adp_neural_sim/mce106_input_data_reports' }}</code>
+    it will appear here automatically within 3 hours, or trigger
+    <code>POST /refresh</code> to pick it up immediately.
   </p>
   <pre style="background:#0f172a;color:#e2e8f0;padding:18px 20px;border-radius:8px;font-size:13px;line-height:1.7;overflow-x:auto;max-width:900px">bazel run //tools/offboard/common/image_quality_analysis:neural_sim_report -- \
   --lance_index_path s3://onroad-perception-datasets/&lt;path&gt;/dataset.lance \
   --title "&lt;title&gt;" \
   --dt_min &lt;start&gt; --dt_max &lt;end&gt; \
   --summary_by segment</pre>
-  <p class="subtitle" style="margin-top:10px">
-    Then add an entry to <code>reports.json</code> with the report's S3 path, add a card above, and run <code>apps-platform app deploy</code>.
-  </p>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>

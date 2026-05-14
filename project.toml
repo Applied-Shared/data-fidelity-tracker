@@ -7,7 +7,7 @@ enable_filestore = false
 enable_gcs_fuse = false
 enable_postgres = false
 enable_mysql = false
-enable_secrets = false
+enable_secrets = true
 enable_api_gateway = false
 enable_slack = false
 
