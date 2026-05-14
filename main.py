@@ -22,7 +22,7 @@ import threading
 import time
 from pathlib import Path
 
-from flask import Flask, Response, abort, redirect, render_template, send_from_directory
+from flask import Flask, Response, abort, redirect, render_template, request, send_from_directory
 
 app = Flask(__name__)
 
@@ -265,7 +265,13 @@ def _all_reports() -> list[dict]:
 
 @app.route("/")
 def hub():
-    return render_template("hub.html", reports=_all_reports(), s3_reports_uri=S3_REPORTS_URI)
+    tab = request.args.get("tab", "all")
+    all_reports = _all_reports()
+    if tab == "mce106":
+        reports = [r for r in all_reports if r.get("source") == "s3"]
+    else:
+        reports = all_reports
+    return render_template("hub.html", reports=reports, tab=tab, s3_reports_uri=S3_REPORTS_URI)
 
 
 @app.route("/api/reports")
